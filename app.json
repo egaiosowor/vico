@@ -1,17 +1,25 @@
 {
   "expo": {
-    "name": "nightwatch",
-    "slug": "nightwatch",
+    "name": "Vico",
+    "slug": "vico",
+    "scheme": "vico",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nightwatch.app"
     },
     "android": {
+      "package": "com.nightwatch.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0A0E1A",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -20,6 +28,22 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-sqlite",
+      "expo-video",
+      "expo-font",
+      "expo-asset",
+      "expo-splash-screen",
+      "expo-location",
+      "expo-notifications",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Vico to access your camera to capture incident photo and video evidence.",
+          "microphonePermission": "Allow Vico to access your microphone to record audio with video evidence."
+        }
+      ]
+    ]
   }
 }
