@@ -1,0 +1,25 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    match /incidents/{incidentId}/{fileName} {
+      // Any authenticated user can view media
+      allow read: if isAuthenticated();
+      
+      // Upload media: must be authenticated, size <= 50MB, image or video
+      allow write: if isAuthenticated()
+        && request.resource.size < 50 * 1024 * 1024
+        && (request.resource.contentType.matches('image/.*') || request.resource.contentType.matches('video/.*'));
+    }
+
+    // Server-generated thumbnails
+    match /incidents/{incidentId}/thumbnail {
+      allow read: if isAuthenticated();
+      allow write: if false; // Cloud Functions only
+    }
+  }
+}

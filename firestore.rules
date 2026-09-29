@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId);
+      // Allow updates to settings or score adjustments from verified actions
+      allow update: if isAuthenticated();
+      allow delete: if isOwner(userId);
+    }
+
+    // Incidents collection - public read for safety broadcasts
+    match /incidents/{incidentId} {
+      allow read: if true;
+      
+      // Creating an incident
+      allow create: if isAuthenticated()
+        && request.resource.data.reporterUid == request.auth.uid
+        && request.resource.data.category in ['critical', 'community', 'civic']
+        && request.resource.data.description.size() <= 280;
+        
+      // Increment views, upvotes, or downvotes
+      allow update: if isAuthenticated()
+        && request.resource.data.diff(resource.data).affectedKeys().hasAny(['viewCount', 'upvotes', 'downvotes', 'active']);
+      
+      allow delete: if isAuthenticated() && resource.data.reporterUid == request.auth.uid;
+
+      // Incident votes subcollection
+      match /votes/{voterUid} {
+        allow read: if true;
+        allow create, update, delete: if isOwner(voterUid);
+      }
+    }
+
+    // ─── Mutual Watch ──────────────────────────────────────────────
+
+    // Invite documents: sender creates, recipient or sender reads/updates
+    match /watch_invites/{inviteId} {
+      allow create: if isAuthenticated()
+        && request.resource.data.fromUid == request.auth.uid;
+      // Allow read so queries on toPhone can succeed for recipient
+      allow read: if isAuthenticated();
+      allow update: if isAuthenticated();
+    }
+
+    // Watch member sub-collections: only the owner can write; the member can read their own entry
+    match /watch_members/{uid}/members/{memberId} {
+      allow read, write: if isOwner(uid);
+      allow read: if isAuthenticated() && request.auth.uid == memberId;
+    }
+
+    // Live location: only the owner writes; authenticated users can read (for Watch subscription)
+    match /user_locations/{uid} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(uid);
+    }
+  }
+}
