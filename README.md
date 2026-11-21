@@ -41,17 +41,29 @@ With an **offline-first SQLite sync engine**, **client-side media compression**,
 <div align="center">
   <table>
     <tr>
-      <td align="center" width="50%">
-        <img src="./assets/mockup-map.png" alt="Tactical Threat Radar Map" width="100%" />
+      <td align="center" width="25%">
+        <img src="./assets/tactical-threat-radar.jpg" alt="Tactical Threat Radar Map" width="100%" />
         <br />
         <b>📍 Tactical Threat Radar</b>
         <p><i>Live dark-mode map with cluster density, safe zone rings, and active incident markers.</i></p>
       </td>
-      <td align="center" width="50%">
-        <img src="./assets/mockup-camera.png" alt="Live Incident Capture" width="100%" />
+      <td align="center" width="25%">
+        <img src="./assets/tactical-incident-feed.jpg" alt="Real-Time Incident Feed" width="100%" />
         <br />
-        <b>📹 Instant Evidence Capture</b>
-        <p><i>Zero-latency camera recording with real-time compression, category tagging, and location verification.</i></p>
+        <b>🚨 Incident Reels</b>
+        <p><i>Vertical incident feed with community votes, urgency tags, and incident metadata.</i></p>
+      </td>
+      <td align="center" width="25%">
+        <img src="./assets/instant-evidence-capture.jpg" alt="Live Incident Capture" width="100%" />
+        <br />
+        <b>📹 Evidence Capture</b>
+        <p><i>Zero-latency camera recording with real-time compression and location tagging.</i></p>
+      </td>
+      <td align="center" width="25%">
+        <img src="./assets/trusted-circles-sos.jpg" alt="Trusted Circles & Emergency SOS" width="100%" />
+        <br />
+        <b>🆘 Circles & SOS</b>
+        <p><i>Private mutual watch circles, live member beacons, and instant emergency SOS dispatch.</i></p>
       </td>
     </tr>
   </table>
@@ -226,8 +238,10 @@ sequenceDiagram
 vico/
 ├── assets/                  # App icons, splash screens, 3D graphics, mockups
 │   ├── hero-banner.png      # High-res landing hero banner
-│   ├── mockup-map.png       # Tactical map UI preview
-│   ├── mockup-camera.png    # Live incident capture UI preview
+│   ├── tactical-threat-radar.jpg    # Tactical map UI preview
+│   ├── tactical-incident-feed.jpg   # Real-time incident reel preview
+│   ├── instant-evidence-capture.jpg # Live incident capture UI preview
+│   ├── trusted-circles-sos.jpg      # Trusted circles & SOS screen preview
 │   ├── radar-3d.jpg         # Radar 3D graphic
 │   ├── circles-3d.jpg       # Safety circles 3D graphic
 │   ├── safezone-3d.jpg      # Safe zone 3D graphic
